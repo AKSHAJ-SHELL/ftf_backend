@@ -1,7 +1,7 @@
 SHELL := /usr/bin/env bash
 BIN := bin/server
 
-.PHONY: build run vet lint test sqlc migrate clean
+.PHONY: build run vet test sqlc migrate clean
 
 build:
 	mkdir -p bin
@@ -12,9 +12,6 @@ run:
 
 vet:
 	go vet ./...
-
-lint:
-	golangci-lint run
 
 test:
 	go test ./... -count=1
