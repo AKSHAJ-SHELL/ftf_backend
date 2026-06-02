@@ -150,11 +150,11 @@ func TestVerifyWrongAlg(t *testing.T) {
 
 func TestBearerFromHeader(t *testing.T) {
 	cases := map[string]string{
-		"":                       "",
-		"Bearer ":                "",
-		"bearer abc":             "abc",
-		"Bearer   token-123  ":   "token-123",
-		"Basic dXNlcjpwYXNz":     "",
+		"":                     "",
+		"Bearer ":              "",
+		"bearer abc":           "abc",
+		"Bearer   token-123  ": "token-123",
+		"Basic dXNlcjpwYXNz":   "",
 	}
 	for h, want := range cases {
 		got := BearerFromHeader(h)

@@ -1,30 +1,44 @@
-run:
-  timeout: 5m
-
+version: "2"
 linters:
-  disable-all: true
+  default: none
   enable:
+    - bodyclose
     - errcheck
-    - gosimple
+    - gosec
     - govet
     - ineffassign
+    - misspell
     - staticcheck
-    - typecheck
     - unused
+  settings:
+    gosec:
+      excludes:
+        - G104 # unchecked errors in defer patterns we accept
+        - G115 # bounded int casts (pagination, pool size, token timestamps)
+        - G404 # math/rand/v2 jitter in worker backoff is intentional (M10)
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+    rules:
+      - linters:
+          - errcheck
+          - gosec
+        path: _test\.go
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+formatters:
+  enable:
     - gofmt
     - goimports
-    - misspell
-    - bodyclose
-    - gosec
-
-issues:
-  exclude-rules:
-    - path: _test\.go
-      linters:
-        - gosec
-        - errcheck
-
-linters-settings:
-  gosec:
-    excludes:
-      - G104
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$

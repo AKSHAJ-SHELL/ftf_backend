@@ -48,16 +48,16 @@ import (
 
 // Deps wires everything the service needs. All fields required.
 type Deps struct {
-	UserPool             *db.UserPool
-	ServicePool          *db.ServicePool
-	Signer               *tokens.Signer
-	Queue                *notifications.Queue
-	AppBaseURL           string
-	FromAddress          string
-	Logger               *slog.Logger
-	EmailThrottleWindow  time.Duration // per-email re-subscribe throttle; 0 disables
-	UnsubscribeTokenTTL  time.Duration // unsubscribe token expiry; 0 = no expiry (legacy behavior)
-	ConfirmTokenTTL      time.Duration // confirm token expiry; 0 -> 7d default
+	UserPool            *db.UserPool
+	ServicePool         *db.ServicePool
+	Signer              *tokens.Signer
+	Queue               *notifications.Queue
+	AppBaseURL          string
+	FromAddress         string
+	Logger              *slog.Logger
+	EmailThrottleWindow time.Duration // per-email re-subscribe throttle; 0 disables
+	UnsubscribeTokenTTL time.Duration // unsubscribe token expiry; 0 = no expiry (legacy behavior)
+	ConfirmTokenTTL     time.Duration // confirm token expiry; 0 -> 7d default
 	// Now is the clock; defaults to time.Now. Override in tests for stable expiries.
 	Now func() time.Time
 }

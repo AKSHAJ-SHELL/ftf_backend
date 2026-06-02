@@ -12,13 +12,13 @@ import (
 type Code string
 
 const (
-	CodeBadRequest    Code = "bad_request"
-	CodeUnauthorized  Code = "unauthorized"
-	CodeForbidden     Code = "forbidden"
-	CodeNotFound      Code = "not_found"
-	CodeConflict      Code = "conflict"
-	CodeRateLimited   Code = "rate_limited"
-	CodeInternal      Code = "internal"
+	CodeBadRequest   Code = "bad_request"
+	CodeUnauthorized Code = "unauthorized"
+	CodeForbidden    Code = "forbidden"
+	CodeNotFound     Code = "not_found"
+	CodeConflict     Code = "conflict"
+	CodeRateLimited  Code = "rate_limited"
+	CodeInternal     Code = "internal"
 )
 
 // Error is the wire-safe payload + a wrapped internal cause.
@@ -51,13 +51,27 @@ func (e *Error) Wrap(err error) *Error {
 	return &cp
 }
 
-func BadRequest(msg string) *Error   { return &Error{Status: http.StatusBadRequest, Code: CodeBadRequest, Message: msg} }
-func Unauthorized(msg string) *Error { return &Error{Status: http.StatusUnauthorized, Code: CodeUnauthorized, Message: msg} }
-func Forbidden(msg string) *Error    { return &Error{Status: http.StatusForbidden, Code: CodeForbidden, Message: msg} }
-func NotFound(msg string) *Error     { return &Error{Status: http.StatusNotFound, Code: CodeNotFound, Message: msg} }
-func Conflict(msg string) *Error     { return &Error{Status: http.StatusConflict, Code: CodeConflict, Message: msg} }
-func RateLimited(msg string) *Error  { return &Error{Status: http.StatusTooManyRequests, Code: CodeRateLimited, Message: msg} }
-func Internal(msg string) *Error     { return &Error{Status: http.StatusInternalServerError, Code: CodeInternal, Message: msg} }
+func BadRequest(msg string) *Error {
+	return &Error{Status: http.StatusBadRequest, Code: CodeBadRequest, Message: msg}
+}
+func Unauthorized(msg string) *Error {
+	return &Error{Status: http.StatusUnauthorized, Code: CodeUnauthorized, Message: msg}
+}
+func Forbidden(msg string) *Error {
+	return &Error{Status: http.StatusForbidden, Code: CodeForbidden, Message: msg}
+}
+func NotFound(msg string) *Error {
+	return &Error{Status: http.StatusNotFound, Code: CodeNotFound, Message: msg}
+}
+func Conflict(msg string) *Error {
+	return &Error{Status: http.StatusConflict, Code: CodeConflict, Message: msg}
+}
+func RateLimited(msg string) *Error {
+	return &Error{Status: http.StatusTooManyRequests, Code: CodeRateLimited, Message: msg}
+}
+func Internal(msg string) *Error {
+	return &Error{Status: http.StatusInternalServerError, Code: CodeInternal, Message: msg}
+}
 
 // As extracts an *Error from err if present.
 func As(err error) (*Error, bool) {

@@ -62,13 +62,13 @@ func TestSubscriberE2E(t *testing.T) {
 	})
 
 	svc := subscribers.NewService(subscribers.Deps{
-		UserPool:            userPool,
-		ServicePool:         servicePool,
-		Signer:              signer,
-		Queue:               queue,
-		AppBaseURL:          "https://api.example.org",
-		FromAddress:         "test@example.org",
-		Logger:              logger,
+		UserPool:    userPool,
+		ServicePool: servicePool,
+		Signer:      signer,
+		Queue:       queue,
+		AppBaseURL:  "https://api.example.org",
+		FromAddress: "test@example.org",
+		Logger:      logger,
 		// Throttle is the defense against token-invalidation via repeated
 		// subscribe calls. Use a long window so the second subscribe in this
 		// test takes the throttle branch (and the first email's URL keeps

@@ -75,9 +75,9 @@ func (s *Service) HandleListSubscribers(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 	httpx.WriteJSON(w, http.StatusOK, map[string]any{
-		"data":  rows,
-		"total": total,
-		"limit": limit,
+		"data":   rows,
+		"total":  total,
+		"limit":  limit,
 		"offset": offset,
 	})
 }
