@@ -1,0 +1,27 @@
+version: "2"
+sql:
+  - engine: postgresql
+    queries: queries
+    schema: migrations
+    gen:
+      go:
+        package: dbq
+        out: internal/db/dbq
+        sql_package: pgx/v5
+        emit_json_tags: true
+        emit_interface: false
+        emit_empty_slices: true
+        emit_prepared_queries: false
+        emit_exact_table_names: false
+        emit_pointers_for_null_types: true
+        rename:
+          citext: string
+        overrides:
+          - db_type: "citext"
+            go_type: "string"
+          - db_type: "bytea"
+            nullable: true
+            go_type:
+              import: ""
+              type: "[]byte"
+              pointer: false

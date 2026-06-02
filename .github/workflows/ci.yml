@@ -1,0 +1,56 @@
+name: ftf-backend CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "ftf-backend/**"
+      - ".github/workflows/ci.yml"
+  pull_request:
+    paths:
+      - "ftf-backend/**"
+      - ".github/workflows/ci.yml"
+
+defaults:
+  run:
+    working-directory: ftf-backend
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.22.x"
+          cache: true
+          cache-dependency-path: ftf-backend/go.sum
+
+      - name: go vet
+        run: go vet ./...
+
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v6
+        with:
+          version: v1.61
+          working-directory: ftf-backend
+
+      - name: install sqlc
+        run: |
+          go install github.com/sqlc-dev/sqlc/cmd/sqlc@v1.31.0
+          echo "$HOME/go/bin" >> "$GITHUB_PATH"
+
+      - name: sqlc diff (no drift)
+        run: sqlc diff
+
+      - name: unit tests
+        run: go test ./... -count=1
+
+      - name: integration tests (RLS + subscriber flow)
+        env:
+          TESTCONTAINERS_RYUK_DISABLED: "true"
+        run: go test -tags=integration ./... -count=1
+
+      - name: ban service-role outside worker / wiring
+        run: ./scripts/grep_gates.sh
